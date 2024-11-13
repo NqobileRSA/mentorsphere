@@ -1,6 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import {
+  Search,
+  Filter,
   Star,
   Clock,
   Users,
@@ -12,8 +14,56 @@ import {
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
+// Define types for our data structures
+type CourseModule = {
+  title: string;
+  weeks: string;
+  topics: string[];
+};
+
+type CourseDetail = {
+  overview: string;
+  skills: string[];
+  outcomes: string[];
+  curriculum: CourseModule[];
+};
+
+type CourseDetails = {
+  [key: string]: CourseDetail;
+};
+
+type Course = {
+  id: string;
+  title: string;
+  subject: string;
+  nqfLevel: number;
+  rating: number;
+  reviews: number;
+  students: number;
+  duration: string;
+  image: string;
+  price: number;
+  tutor: {
+    name: string;
+    image: string;
+  };
+};
+
+type DetailCardProps = {
+  title: string;
+  children: React.ReactNode;
+  delay?: number;
+};
+
 const CoursesPage = () => {
-  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedFilters, setSelectedFilters] = useState({
+    subject: 'All Subjects',
+    level: 'All Levels',
+    price: 'All Prices',
+  });
+  const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
     AOS.init({
@@ -23,7 +73,7 @@ const CoursesPage = () => {
     });
   }, []);
 
-  const courseDetails = {
+  const courseDetails: CourseDetails = {
     'Full Stack Web Development': {
       overview:
         'Master both frontend and backend development with modern technologies including React, Node.js, and databases.',
@@ -368,7 +418,7 @@ const CoursesPage = () => {
     },
   };
 
-  const courses = [
+  const courses: Course[] = [
     {
       id: '1',
       title: 'Full Stack Web Development with React & Node.js',
@@ -466,8 +516,9 @@ const CoursesPage = () => {
       },
     },
   ];
-  const getCourseDetails = (title) => {
-    const titleMap = {
+
+  const getCourseDetails = (title: string): CourseDetail => {
+    const titleMap: { [key: string]: string } = {
       'Full Stack Web Development with React & Node.js':
         'Full Stack Web Development',
       'Certified Ethical Hacking & Penetration Testing': 'Ethical Hacking',
@@ -482,7 +533,11 @@ const CoursesPage = () => {
     );
   };
 
-  const DetailCard = ({ title, children, delay = 0 }) => (
+  const DetailCard: React.FC<DetailCardProps> = ({
+    title,
+    children,
+    delay = 0,
+  }) => (
     <div
       className="mb-8 rounded-xl border bg-white p-6 shadow-sm"
       data-aos="fade-up"
