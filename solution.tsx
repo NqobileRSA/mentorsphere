@@ -259,6 +259,7 @@ const TermsTutor = ({
   </div>
 );
 
+// Student Form Components
 const PersonalInfoStudent = ({
   data,
   onChange,
@@ -382,44 +383,12 @@ export default function RegistrationPage() {
   const handleTutorSubmit = async () => {
     setIsSubmitting(true);
     setFormError('');
-
     try {
-      const formData = new FormData();
-
-      // Add all regular fields
-      Object.entries(tutorFormData).forEach(([key, value]) => {
-        if (key === 'qualificationProof') {
-          // Handle file separately
-          if (value) {
-            formData.append('qualificationProof', value);
-          }
-        } else if (key === 'selectedCourses' || key === 'availability') {
-          // Convert arrays and objects to JSON strings
-          formData.append(key, JSON.stringify(value));
-        } else {
-          formData.append(key, String(value));
-        }
-      });
-
-      const response = await fetch('/api/register/tutor', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-          errorData.message || 'Failed to submit tutor application'
-        );
-      }
-
-      const data = await response.json();
+      // Add your submission logic here
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulated API call
       setSubmitSuccess(true);
     } catch (error: any) {
-      setFormError(
-        error.message || 'An error occurred while submitting the application'
-      );
-      console.error('Tutor registration error:', error);
+      setFormError(error.message || 'An error occurred');
     } finally {
       setIsSubmitting(false);
     }
@@ -428,41 +397,12 @@ export default function RegistrationPage() {
   const handleStudentSubmit = async () => {
     setIsSubmitting(true);
     setFormError('');
-
     try {
-      const formData = new FormData();
-
-      // Add all regular fields
-      Object.entries(studentFormData).forEach(([key, value]) => {
-        if (key === 'paymentProof') {
-          // Handle file separately
-          if (value) {
-            formData.append('paymentProof', value);
-          }
-        } else {
-          formData.append(key, String(value));
-        }
-      });
-
-      const response = await fetch('/api/register/student', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-          errorData.message || 'Failed to complete student registration'
-        );
-      }
-
-      const data = await response.json();
+      // Add your submission logic here
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulated API call
       setSubmitSuccess(true);
     } catch (error: any) {
-      setFormError(
-        error.message || 'An error occurred while completing registration'
-      );
-      console.error('Student registration error:', error);
+      setFormError(error.message || 'An error occurred');
     } finally {
       setIsSubmitting(false);
     }
