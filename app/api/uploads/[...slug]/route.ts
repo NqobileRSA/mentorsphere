@@ -1,8 +1,8 @@
-// src/app/api/uploads/[...slug]/route.ts
 import { NextResponse } from 'next/server';
 import { readFile } from 'fs/promises';
 import path from 'path';
 
+// Update the function signature to use NextRequest correctly
 export async function GET(
   request: Request,
   { params }: { params: { slug: string[] } }
