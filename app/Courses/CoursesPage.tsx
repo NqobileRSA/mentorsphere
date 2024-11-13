@@ -1,8 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import {
-  Search,
-  Filter,
   Star,
   Clock,
   Users,
@@ -16,13 +14,6 @@ import 'aos/dist/aos.css';
 
 const CoursesPage = () => {
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedFilters, setSelectedFilters] = useState({
-    subject: 'All Subjects',
-    level: 'All Levels',
-    price: 'All Prices',
-  });
-  const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
     AOS.init({

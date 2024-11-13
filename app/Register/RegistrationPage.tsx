@@ -465,7 +465,6 @@ const CourseSelectionStudent = ({
 );
 
 const PaymentStudent = ({
-  data,
   onChange,
 }: {
   data: StudentFormData;

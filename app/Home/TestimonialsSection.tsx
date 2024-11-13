@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { Star, Quote } from 'lucide-react';
 import AOS from 'aos';
 
 interface Testimonial {
@@ -80,16 +80,6 @@ const TestimonialsSection = () => {
       return () => clearInterval(timer);
     }
   }, [isPaused, testimonials.length]);
-
-  const nextTestimonials = () => {
-    setActiveIndex((prev) => (prev + 2) % testimonials.length);
-  };
-
-  const previousTestimonials = () => {
-    setActiveIndex(
-      (prev) => (prev - 2 + testimonials.length) % testimonials.length
-    );
-  };
 
   // Get current pair of testimonials
   const getCurrentTestimonials = () => {

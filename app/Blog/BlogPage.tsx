@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Search, BookOpen, Clock, ChevronRight, Filter } from 'lucide-react';
+import { Search, Clock, ChevronRight, Filter } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 

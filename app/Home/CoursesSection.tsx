@@ -1,15 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import {
-  Search,
-  GraduationCap,
-  Clock,
-  Users,
-  Star,
-  Filter,
-  ChevronRight,
-  BookOpen,
-} from 'lucide-react';
+import { Search, Clock, Users, Star, Filter, ChevronRight } from 'lucide-react';
 import AOS from 'aos';
 
 interface Course {
