@@ -122,7 +122,7 @@ const AboutSection = () => {
               data-aos="zoom-in"
               data-aos-delay={index * 150}
             >
-              <feature.icon className="mb-4 h-10 w-10 text-slate-800" />
+              <feature.icon />
               <h3 className="mb-3 text-xl font-semibold text-gray-900">
                 {feature.title}
               </h3>
