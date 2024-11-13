@@ -2,10 +2,9 @@ import { NextResponse } from 'next/server';
 import { readFile } from 'fs/promises';
 import path from 'path';
 
-// Next.js will automatically infer the correct types for params
 export async function GET(
   request: Request,
-  { params }: { params: { slug: string[] } }
+  { params: params }: { params: any }
 ) {
   try {
     const filePath = path.join(
