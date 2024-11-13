@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { readFile } from 'fs/promises';
 import path from 'path';
 
-// Update the function signature to use NextRequest correctly
+// Next.js will automatically infer the correct types for params
 export async function GET(
   request: Request,
   { params }: { params: { slug: string[] } }
