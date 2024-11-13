@@ -1,6 +1,8 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, Minus } from 'lucide-react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 interface FAQItem {
   question: string;
@@ -11,6 +13,14 @@ interface FAQItem {
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
+
+  useEffect(() => {
+    AOS.init({
+      duration: 600, // animation duration in ms
+      easing: 'ease-in-out',
+      once: true, // animation occurs only once
+    });
+  }, []);
 
   const faqs: FAQItem[] = [
     {
@@ -52,7 +62,6 @@ const FAQSection = () => {
   ];
 
   const categories = ['All', ...new Set(faqs.map((faq) => faq.category))];
-
   const filteredFaqs =
     selectedCategory === 'All'
       ? faqs
@@ -61,26 +70,26 @@ const FAQSection = () => {
   return (
     <section className="py-16 lg:py-24">
       <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="mb-12 text-center">
+        <div className="mb-12 text-center" data-aos="fade-up">
           <h2 className="mb-4 text-3xl font-bold text-gray-900 lg:text-4xl">
             Frequently Asked Questions
           </h2>
           <p className="mx-auto max-w-2xl text-lg text-gray-600">
-            Find answers to common questions about our tutoring services,
-            policies, and procedures.
+            Find answers to common questions about our tutoring services.
           </p>
         </div>
 
-        {/* Category Filters */}
-        <div className="mb-8 flex flex-wrap justify-center gap-2">
+        <div
+          className="mb-8 flex flex-wrap justify-center gap-2"
+          data-aos="fade-up"
+        >
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
               className={`rounded-full px-6 py-2 text-sm font-medium transition-all ${
                 selectedCategory === category
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-slate-800 text-white'
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
@@ -89,12 +98,13 @@ const FAQSection = () => {
           ))}
         </div>
 
-        {/* FAQ Accordion */}
         <div className="mx-auto max-w-3xl space-y-4">
           {filteredFaqs.map((faq, index) => (
             <div
               key={index}
               className="rounded-lg border border-gray-200 bg-white transition-all"
+              data-aos="fade-up"
+              data-aos-delay={index * 100} // delay for staggered effect
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
@@ -104,7 +114,7 @@ const FAQSection = () => {
                   {faq.question}
                 </span>
                 {openIndex === index ? (
-                  <Minus className="h-5 w-5 text-blue-600" />
+                  <Minus className="h-5 w-5 text-slate-800" />
                 ) : (
                   <Plus className="h-5 w-5 text-gray-400" />
                 )}
@@ -122,13 +132,12 @@ const FAQSection = () => {
           ))}
         </div>
 
-        {/* Contact Support */}
-        <div className="mt-12 text-center">
+        <div className="mt-12 text-center" data-aos="fade-up">
           <p className="text-gray-600">
             Still have questions?{' '}
             <a
-              href="/contact"
-              className="font-medium text-blue-600 hover:text-blue-700"
+              href="#"
+              className="font-medium text-slate-800 hover:text-slate-600"
             >
               Contact our support team
             </a>

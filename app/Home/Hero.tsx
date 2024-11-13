@@ -79,14 +79,14 @@ const Hero = () => {
             {/* CTA Buttons */}
             <div className="mb-12 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
               <Link
-                href="/book-tutor"
-                className="group flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 text-lg font-semibold text-white transition-all hover:bg-blue-700"
+                href="/Register"
+                className="group flex items-center justify-center rounded-lg bg-slate-800 px-6 py-3 text-lg font-semibold text-white transition-all hover:bg-slate-800"
               >
                 Book a Tutor
                 <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
-                href="/become-tutor"
+                href="/Register"
                 className="rounded-lg border-2 border-white px-6 py-3 text-lg font-semibold text-white transition-all hover:bg-white hover:text-gray-900"
               >
                 Become a Tutor

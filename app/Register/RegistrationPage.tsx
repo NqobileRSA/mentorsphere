@@ -12,6 +12,25 @@ import {
 // Types
 type UserType = 'tutor' | 'student' | null;
 
+interface Tutor {
+  name: string;
+  image: string;
+}
+
+interface Course {
+  id: string;
+  title: string;
+  subject: string;
+  nqfLevel: number;
+  rating: number;
+  reviews: number;
+  students: number;
+  duration: string;
+  image: string;
+  price: number;
+  tutor: Tutor;
+}
+
 interface TutorFormData {
   firstName: string;
   lastName: string;
@@ -37,27 +56,102 @@ interface StudentFormData {
   paymentProof: File | null;
 }
 
-const SAMPLE_COURSES = [
+const COURSES: Course[] = [
   {
     id: '1',
-    title: 'Advanced Calculus',
-    subject: 'Mathematics',
-    level: 'Advanced',
-    price: 89.99,
+    title: 'Full Stack Web Development with React & Node.js',
+    subject: 'Web Development',
+    nqfLevel: 6,
+    rating: 4.8,
+    reviews: 328,
+    students: 2450,
+    duration: '16 weeks',
+    image: '/api/placeholder/400/300',
+    price: 8999,
+    tutor: {
+      name: 'David van der Merwe',
+      image: '/api/placeholder/64/64',
+    },
   },
   {
     id: '2',
-    title: 'Physics Fundamentals',
-    subject: 'Science',
-    level: 'Beginner',
-    price: 69.99,
+    title: 'Certified Ethical Hacking & Penetration Testing',
+    subject: 'Cybersecurity',
+    nqfLevel: 7,
+    rating: 4.9,
+    reviews: 195,
+    students: 1290,
+    duration: '12 weeks',
+    image: '/api/placeholder/400/300',
+    price: 12999,
+    tutor: {
+      name: 'Themba Nkosi',
+      image: '/api/placeholder/64/64',
+    },
   },
   {
     id: '3',
-    title: 'Creative Writing',
-    subject: 'English',
-    level: 'Intermediate',
-    price: 79.99,
+    title: 'Data Science & Machine Learning with Python',
+    subject: 'Data Science',
+    nqfLevel: 8,
+    rating: 4.7,
+    reviews: 256,
+    students: 1800,
+    duration: '20 weeks',
+    image: '/api/placeholder/400/300',
+    price: 15999,
+    tutor: {
+      name: 'Dr. Sarah Botha',
+      image: '/api/placeholder/64/64',
+    },
+  },
+  {
+    id: '4',
+    title: 'AWS Cloud Architecture & DevOps',
+    subject: 'Cloud Computing',
+    nqfLevel: 7,
+    rating: 4.8,
+    reviews: 182,
+    students: 1560,
+    duration: '14 weeks',
+    image: '/api/placeholder/400/300',
+    price: 13999,
+    tutor: {
+      name: 'Jayden Naidoo',
+      image: '/api/placeholder/64/64',
+    },
+  },
+  {
+    id: '5',
+    title: 'Mobile App Development with Flutter & Firebase',
+    subject: 'Software Engineering',
+    nqfLevel: 6,
+    rating: 4.6,
+    reviews: 145,
+    students: 980,
+    duration: '12 weeks',
+    image: '/api/placeholder/400/300',
+    price: 9999,
+    tutor: {
+      name: 'Lisa Parker',
+      image: '/api/placeholder/64/64',
+    },
+  },
+  {
+    id: '6',
+    title: 'Advanced System Architecture & Network Security',
+    subject: 'Cybersecurity',
+    nqfLevel: 8,
+    rating: 4.9,
+    reviews: 167,
+    students: 750,
+    duration: '16 weeks',
+    image: '/api/placeholder/400/300',
+    price: 16999,
+    tutor: {
+      name: 'Prof. Ahmed Patel',
+      image: '/api/placeholder/64/64',
+    },
   },
 ];
 
@@ -181,9 +275,12 @@ const CourseSelectionTutor = ({
 }) => (
   <div className="space-y-4">
     <h3 className="text-xl font-semibold">Course Selection</h3>
-    <div className="space-y-2">
-      {SAMPLE_COURSES.map((course) => (
-        <label key={course.id} className="flex items-center space-x-2">
+    <div className="space-y-4">
+      {COURSES.map((course) => (
+        <label
+          key={course.id}
+          className="flex items-start space-x-3 rounded-lg border p-4 hover:bg-gray-50"
+        >
           <input
             type="checkbox"
             checked={data.selectedCourses.includes(course.id)}
@@ -193,11 +290,16 @@ const CourseSelectionTutor = ({
                 : data.selectedCourses.filter((id) => id !== course.id);
               onChange('selectedCourses', newSelected);
             }}
-            className="h-4 w-4 rounded border-gray-300"
+            className="mt-1 h-4 w-4 rounded border-gray-300"
           />
-          <span>
-            {course.title} - {course.level}
-          </span>
+          <div className="flex-1">
+            <span className="font-medium">{course.title}</span>
+            <div className="mt-1 text-sm text-gray-600">
+              <p>Subject: {course.subject}</p>
+              <p>NQF Level: {course.nqfLevel}</p>
+              <p>Duration: {course.duration}</p>
+            </div>
+          </div>
         </label>
       ))}
     </div>
@@ -310,22 +412,48 @@ const CourseSelectionStudent = ({
 }) => (
   <div className="space-y-4">
     <h3 className="text-xl font-semibold">Course Selection</h3>
-    <select
-      value={data.selectedCourse}
-      onChange={(e) => onChange('selectedCourse', e.target.value)}
-      className="w-full rounded-lg border p-2"
-    >
-      <option value="">Select a course</option>
-      {SAMPLE_COURSES.map((course) => (
-        <option key={course.id} value={course.id}>
-          {course.title} - {course.level} (${course.price})
-        </option>
+    <div className="space-y-4">
+      {COURSES.map((course) => (
+        <label
+          key={course.id}
+          className={`flex cursor-pointer items-start space-x-3 rounded-lg border p-4 ${
+            data.selectedCourse === course.id
+              ? 'border-blue-500 bg-blue-50'
+              : 'hover:bg-gray-50'
+          }`}
+        >
+          <input
+            type="radio"
+            name="course"
+            value={course.id}
+            checked={data.selectedCourse === course.id}
+            onChange={(e) => onChange('selectedCourse', e.target.value)}
+            className="mt-1 h-4 w-4 border-gray-300"
+          />
+          <div className="flex-1">
+            <div className="flex justify-between">
+              <span className="font-medium">{course.title}</span>
+              <span className="font-semibold">
+                R{course.price.toLocaleString()}
+              </span>
+            </div>
+            <div className="mt-1 text-sm text-gray-600">
+              <p>Subject: {course.subject}</p>
+              <p>NQF Level: {course.nqfLevel}</p>
+              <p>Duration: {course.duration}</p>
+              <p>Tutor: {course.tutor.name}</p>
+              <p>
+                Rating: {course.rating}/5 ({course.reviews} reviews)
+              </p>
+            </div>
+          </div>
+        </label>
       ))}
-    </select>
+    </div>
     <select
       value={data.educationLevel}
       onChange={(e) => onChange('educationLevel', e.target.value)}
-      className="w-full rounded-lg border p-2"
+      className="mt-4 w-full rounded-lg border p-2"
     >
       <option value="">Select your education level</option>
       <option value="high_school">High School</option>

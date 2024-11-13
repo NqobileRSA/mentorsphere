@@ -1,6 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import AOS from 'aos';
 
 interface Testimonial {
   id: number;
@@ -16,66 +17,56 @@ const TestimonialsSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
+  // Initialize AOS
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+      easing: 'ease-out-cubic',
+    });
+  }, []);
+
+  // Refresh AOS when testimonials change
+  useEffect(() => {
+    AOS.refresh();
+  }, [activeIndex]);
+
   const testimonials: Testimonial[] = [
     {
       id: 1,
-      name: 'Alex Thompson',
-      role: 'University Student',
-      image: '/api/placeholder/80/80',
-      content:
-        'The personalized attention I received from my calculus tutor was incredible. My grades improved significantly, and I finally gained the confidence I needed in mathematics.',
+      name: 'Sipho Mahlangu',
+      role: 'Junior Developer at Standard Bank',
+      image: '/testimonial/avatar1.jpg',
+      content: `'The Full Stack Web Development course was exactly what I needed to transition from my IT support role. David van der Merwe's practical approach and focus on local industry needs helped me land my dream job in Sandton.'`,
       rating: 5,
-      subject: 'Calculus',
+      subject: 'Web Development',
     },
     {
       id: 2,
-      name: 'Maria Rodriguez',
-      role: 'High School Senior',
-      image: '/api/placeholder/80/80',
-      content:
-        'Finding a physics tutor who could explain complex concepts in simple terms was a game-changer. I went from struggling to excelling in my AP Physics class.',
+      name: 'Nomvula Dlamini',
+      role: 'Security Analyst',
+      image: '/testimonial/avatar2.jpg',
+      content: `'Themba Nkosi's Ethical Hacking course was intense but incredibly rewarding. The hands-on labs and focus on South African compliance frameworks like POPIA gave me the expertise I needed for my role at Vodacom.'`,
       rating: 5,
-      subject: 'Physics',
+      subject: 'Cybersecurity',
     },
     {
       id: 3,
-      name: 'David Chen',
-      role: 'Parent',
-      image: '/api/placeholder/80/80',
-      content:
-        "My daughter's English literature grades have improved dramatically since working with her tutor. The flexible scheduling made it easy to fit sessions into her busy schedule.",
+      name: 'Pieter van Wyk',
+      role: 'Data Scientist at Discovery',
+      image: '/testimonial/avatar3.jpg',
+      content: `'Dr. Botha's Data Science course struck the perfect balance between theory and practical application. The project using South African healthcare data helped me understand how ML can solve local challenges.'`,
       rating: 5,
-      subject: 'English Literature',
+      subject: 'Data Science',
     },
     {
       id: 4,
-      name: 'Sarah Williams',
-      role: 'Graduate Student',
-      image: '/api/placeholder/80/80',
-      content:
-        "The GMAT prep tutoring I received was exceptional. My tutor's strategy-focused approach helped me achieve a 700+ score and get into my dream business school.",
+      name: 'Thandi Moyo',
+      role: 'Cloud Engineer at Rain',
+      image: '/testimonial/avatar4.jpg',
+      content: `'The AWS & DevOps course by Jayden Naidoo was excellent. His experience with local enterprises helped me understand how to architect solutions that work with our unique infrastructure challenges.'`,
       rating: 5,
-      subject: 'GMAT Prep',
-    },
-    {
-      id: 5,
-      name: 'James Miller',
-      role: 'High School Junior',
-      image: '/api/placeholder/80/80',
-      content:
-        'Chemistry was always challenging for me, but my tutor made it interesting and relatable. The practice problems and study guides were incredibly helpful.',
-      rating: 5,
-      subject: 'Chemistry',
-    },
-    {
-      id: 6,
-      name: 'Emma Davis',
-      role: 'College Freshman',
-      image: '/api/placeholder/80/80',
-      content:
-        "The computer science tutoring helped me catch up when I felt behind in my intro programming course. Now I'm considering it as my major!",
-      rating: 5,
-      subject: 'Computer Science',
+      subject: 'Cloud Computing',
     },
   ];
 
@@ -108,31 +99,55 @@ const TestimonialsSection = () => {
     return [first, second];
   };
 
-  const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => (
+  const TestimonialCard = ({
+    testimonial,
+    index,
+  }: {
+    testimonial: Testimonial;
+    index: number;
+  }) => (
     <div
+      data-aos="fade-up"
+      data-aos-delay={index * 200}
       className="relative flex h-full flex-col rounded-2xl bg-white p-8 shadow-lg transition-all hover:shadow-xl"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <Quote className="absolute right-8 top-8 h-12 w-12 text-blue-100" />
+      <Quote
+        className="absolute right-8 top-8 h-12 w-12 text-blue-100"
+        data-aos="fade-left"
+        data-aos-delay={index * 200 + 200}
+      />
 
       <div className="relative z-10">
         {/* Rating */}
-        <div className="mb-6 flex items-center space-x-1">
+        <div
+          className="mb-6 flex items-center space-x-1"
+          data-aos="fade-right"
+          data-aos-delay={index * 200 + 100}
+        >
           {[...Array(testimonial.rating)].map((_, i) => (
             <Star key={i} className="h-4 w-4 fill-current text-yellow-400" />
           ))}
         </div>
 
         {/* Content */}
-        <blockquote className="mb-8 flex-1">
+        <blockquote
+          className="mb-8 flex-1"
+          data-aos="fade-up"
+          data-aos-delay={index * 200 + 300}
+        >
           <p className="text-lg text-gray-700">
             &ldquo;{testimonial.content}&ldquo;
           </p>
         </blockquote>
 
         {/* Author */}
-        <div className="flex items-center space-x-4">
+        <div
+          className="flex items-center space-x-4"
+          data-aos="fade-up"
+          data-aos-delay={index * 200 + 400}
+        >
           <img
             src={testimonial.image}
             alt={testimonial.name}
@@ -156,10 +171,17 @@ const TestimonialsSection = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="mb-12 text-center">
-          <h2 className="mb-4 text-3xl font-bold text-gray-900 lg:text-4xl">
+          <h2
+            className="mb-4 text-3xl font-bold text-gray-900 lg:text-4xl"
+            data-aos="fade-down"
+          >
             What Our Students Say
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-gray-600">
+          <p
+            className="mx-auto max-w-2xl text-lg text-gray-600"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
             Discover how our tutoring services have helped students achieve
             their academic goals and boost their confidence.
           </p>
@@ -168,30 +190,22 @@ const TestimonialsSection = () => {
         {/* Testimonials Grid */}
         <div className="relative mx-auto max-w-6xl">
           <div className="grid gap-6 md:grid-cols-2">
-            {getCurrentTestimonials().map((testimonial) => (
-              <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+            {getCurrentTestimonials().map((testimonial, index) => (
+              <TestimonialCard
+                key={testimonial.id}
+                testimonial={testimonial}
+                index={index}
+              />
             ))}
-          </div>
-
-          {/* Navigation Buttons */}
-          <div className="absolute left-0 right-0 top-1/2 flex -translate-y-1/2 justify-between px-4">
-            <button
-              onClick={previousTestimonials}
-              className="rounded-full bg-white p-2 shadow-lg transition-all hover:bg-gray-50"
-            >
-              <ChevronLeft className="h-6 w-6 text-gray-600" />
-            </button>
-            <button
-              onClick={nextTestimonials}
-              className="rounded-full bg-white p-2 shadow-lg transition-all hover:bg-gray-50"
-            >
-              <ChevronRight className="h-6 w-6 text-gray-600" />
-            </button>
           </div>
         </div>
 
         {/* Testimonial Indicators */}
-        <div className="mt-8 flex justify-center space-x-2">
+        <div
+          className="mt-8 flex justify-center space-x-2"
+          data-aos="fade-up"
+          data-aos-delay="600"
+        >
           {Array.from({ length: Math.ceil(testimonials.length / 2) }).map(
             (_, index) => (
               <button

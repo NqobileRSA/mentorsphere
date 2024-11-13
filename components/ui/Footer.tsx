@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import {
   Facebook,
@@ -12,12 +13,24 @@ import {
 } from 'lucide-react';
 
 const Footer = () => {
+  useEffect(() => {
+    // Initialize AOS
+    if (typeof window !== 'undefined') {
+      const AOS = require('aos');
+      AOS.init({
+        duration: 1000,
+        once: true,
+        easing: 'ease-out',
+      });
+    }
+  }, []);
+
   const links = {
     company: [
-      { label: 'About Us', href: '/about' },
-      { label: 'Careers', href: '/careers' },
-      { label: 'Blog', href: '/blog' },
-      { label: 'Press', href: '/press' },
+      { label: 'About Us', href: '/About' },
+      { label: 'Courses', href: '/Courses' },
+      { label: 'Blog', href: '/Blog' },
+      { label: 'Register', href: '/Register' },
     ],
     support: [
       { label: 'Help Center', href: '/help' },
@@ -45,7 +58,10 @@ const Footer = () => {
       {/* Newsletter Section */}
       <div className="border-b border-gray-800 py-12">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col items-center justify-between gap-8 lg:flex-row">
+          <div
+            className="flex flex-col items-center justify-between gap-8 lg:flex-row"
+            data-aos="fade-up"
+          >
             <div>
               <h3 className="mb-2 text-2xl font-bold text-white">
                 Stay Updated with Mentor Sphere
@@ -73,7 +89,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="grid gap-12 lg:grid-cols-4">
           {/* Brand Column */}
-          <div className="space-y-6">
+          <div className="space-y-6" data-aos="fade-right" data-aos-delay="100">
             <Link href="/" className="text-2xl font-bold text-white">
               Mentor Sphere
             </Link>
@@ -82,12 +98,14 @@ const Footer = () => {
               tutoring since 2020.
             </p>
             <div className="flex space-x-4">
-              {socialLinks.map(({ Icon, href, label }) => (
+              {socialLinks.map(({ Icon, href, label }, index) => (
                 <a
                   key={label}
                   href={href}
                   className="rounded-full bg-gray-800 p-2 text-gray-400 transition-colors hover:bg-gray-700 hover:text-white"
                   aria-label={label}
+                  data-aos="zoom-in"
+                  data-aos-delay={150 + index * 50}
                 >
                   <Icon className="h-5 w-5" />
                 </a>
@@ -97,14 +115,22 @@ const Footer = () => {
 
           {/* Links Columns */}
           <div className="grid grid-cols-2 gap-8 lg:col-span-2">
-            {Object.entries(links).map(([title, items]) => (
-              <div key={title}>
+            {Object.entries(links).map(([title, items], columnIndex) => (
+              <div
+                key={title}
+                data-aos="fade-up"
+                data-aos-delay={200 + columnIndex * 100}
+              >
                 <h4 className="mb-4 text-lg font-semibold text-white">
                   {title.charAt(0).toUpperCase() + title.slice(1)}
                 </h4>
                 <ul className="space-y-2">
-                  {items.map((item) => (
-                    <li key={item.label}>
+                  {items.map((item, itemIndex) => (
+                    <li
+                      key={item.label}
+                      data-aos="fade-left"
+                      data-aos-delay={300 + itemIndex * 50}
+                    >
                       <Link
                         href={item.href}
                         className="text-gray-400 transition-colors hover:text-white"
@@ -119,24 +145,33 @@ const Footer = () => {
           </div>
 
           {/* Contact Info */}
-          <div>
+          <div data-aos="fade-left" data-aos-delay="400">
             <h4 className="mb-4 text-lg font-semibold text-white">Contact</h4>
             <div className="space-y-4">
-              <div className="flex items-center space-x-3">
+              <div
+                className="flex items-center space-x-3"
+                data-aos="fade-left"
+                data-aos-delay="450"
+              >
                 <MapPin className="h-5 w-5 text-gray-400" />
-                <span>Sydney NSW 2052, Australia</span>
+                <span>Durban kzn , South Africa</span>
               </div>
-              <div className="flex items-center space-x-3">
+              <div
+                className="flex items-center space-x-3"
+                data-aos="fade-left"
+                data-aos-delay="500"
+              >
                 <Phone className="h-5 w-5 text-gray-400" />
                 <span>+61 2 9385 1000</span>
               </div>
-              <div className="flex items-center space-x-3">
+              <div
+                className="flex items-center space-x-3"
+                data-aos="fade-left"
+                data-aos-delay="550"
+              >
                 <Mail className="h-5 w-5 text-gray-400" />
-                <a
-                  href="mailto:hello@mentorsphere.edu"
-                  className="hover:text-white"
-                >
-                  hello@mentorsphere.edu
+                <a href="#" className="hover:text-white">
+                  mentorsphere@edu.com
                 </a>
               </div>
             </div>
@@ -144,7 +179,11 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 border-t border-gray-800 pt-8">
+        <div
+          className="mt-12 border-t border-gray-800 pt-8"
+          data-aos="fade-up"
+          data-aos-delay="600"
+        >
           <div className="flex flex-col items-center justify-between gap-4 text-sm text-gray-400 lg:flex-row">
             <p>© 2024 Mentor Sphere. All rights reserved.</p>
             <div className="flex space-x-4">

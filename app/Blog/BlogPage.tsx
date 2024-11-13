@@ -1,6 +1,8 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, BookOpen, Clock, ChevronRight, Filter } from 'lucide-react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 interface BlogPost {
   id: string;
@@ -23,6 +25,15 @@ const BlogPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [showFilters, setShowFilters] = useState(false);
 
+  // Initialize AOS
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: 'ease-out',
+    });
+  }, []);
+
   const categories = [
     'All',
     'Study Tips',
@@ -32,7 +43,6 @@ const BlogPage = () => {
     'Career Guidance',
   ];
 
-  // Sample blog posts data
   const blogPosts: BlogPost[] = [
     {
       id: '1',
@@ -44,11 +54,11 @@ const BlogPage = () => {
       author: {
         name: 'Dr. Sarah Johnson',
         role: 'Education Specialist',
-        image: '/api/placeholder/64/64',
+        image: '/study.jpg',
       },
       readTime: '5 min read',
       date: 'Mar 15, 2024',
-      image: '/api/placeholder/800/400',
+      image: '/study.jpg',
     },
     {
       id: '2',
@@ -60,11 +70,11 @@ const BlogPage = () => {
       author: {
         name: 'Prof. Michael Chen',
         role: 'Tech Innovation Lead',
-        image: '/api/placeholder/64/64',
+        image: '/AI.jpg',
       },
       readTime: '7 min read',
       date: 'Mar 12, 2024',
-      image: '/api/placeholder/800/400',
+      image: '/AI.jpg',
     },
     {
       id: '3',
@@ -76,24 +86,28 @@ const BlogPage = () => {
       author: {
         name: 'Emily Roberts',
         role: 'Student Counselor',
-        image: '/api/placeholder/64/64',
+        image: '/success.jpg',
       },
       readTime: '6 min read',
       date: 'Mar 10, 2024',
-      image: '/api/placeholder/800/400',
+      image: '/success.jpg',
     },
   ];
 
-  const BlogPostCard = ({ post }: { post: BlogPost }) => (
-    <div className="flex flex-col overflow-hidden rounded-xl border bg-white shadow-sm transition-all hover:shadow-md">
+  const BlogPostCard = ({ post, index }: { post: BlogPost; index: number }) => (
+    <div
+      data-aos="fade-up"
+      data-aos-delay={index * 100}
+      className="flex flex-col overflow-hidden rounded-xl border bg-white shadow-sm transition-all hover:shadow-md"
+    >
       <div className="relative">
         <img
           src={post.image}
           alt={post.title}
-          className="h-48 w-full object-cover"
+          className="h-[450px] w-full object-cover object-center"
         />
         <div className="absolute bottom-4 left-4">
-          <span className="rounded-full bg-blue-600 px-3 py-1 text-sm font-medium text-white">
+          <span className="rounded-full bg-slate-800 px-3 py-1 text-sm font-medium text-white">
             {post.category}
           </span>
         </div>
@@ -108,7 +122,7 @@ const BlogPage = () => {
           <div>{post.date}</div>
         </div>
 
-        <h3 className="mb-3 text-xl font-bold text-gray-900 hover:text-blue-600">
+        <h3 className="mb-3 text-xl font-bold text-gray-900 hover:text-slate-800">
           {post.title}
         </h3>
 
@@ -139,7 +153,7 @@ const BlogPage = () => {
               <p className="text-sm text-gray-600">{post.author.role}</p>
             </div>
           </div>
-          <button className="group flex items-center text-blue-600 hover:text-blue-700">
+          <button className="group flex items-center text-slate-800 hover:text-slate-800">
             Read More
             <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
           </button>
@@ -151,15 +165,22 @@ const BlogPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <div className="relative bg-blue-600 py-24">
+      <div className="relative bg-slate-800 py-24">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 bg-blue-700/30" />
+          <div className="absolute inset-0 bg-slate-800/30" />
         </div>
         <div className="relative container mx-auto px-4 text-center">
-          <h1 className="mb-6 text-4xl font-bold text-white lg:text-5xl">
+          <h1
+            data-aos="fade-down"
+            className="mb-6 text-4xl font-bold text-white lg:text-5xl"
+          >
             Educational Insights & Resources
           </h1>
-          <p className="mx-auto max-w-2xl text-lg text-blue-100">
+          <p
+            data-aos="fade-up"
+            data-aos-delay="200"
+            className="mx-auto max-w-2xl text-lg text-blue-100"
+          >
             Explore our collection of articles, guides, and expert advice to
             enhance your learning journey and stay updated with the latest in
             education.
@@ -170,7 +191,7 @@ const BlogPage = () => {
       {/* Blog Content */}
       <div className="container mx-auto px-4 py-16">
         {/* Search and Filters */}
-        <div className="mb-12">
+        <div data-aos="fade-down" className="mb-12">
           <div className="mb-6 flex flex-col space-y-4 lg:flex-row lg:items-center lg:justify-between lg:space-y-0">
             {/* Search Bar */}
             <div className="relative flex-1 lg:max-w-xl">
@@ -196,7 +217,7 @@ const BlogPage = () => {
 
           {/* Category Filters */}
           {showFilters && (
-            <div className="flex flex-wrap gap-2">
+            <div data-aos="fade-down" className="flex flex-wrap gap-2">
               {categories.map((category) => (
                 <button
                   key={category}
@@ -216,30 +237,28 @@ const BlogPage = () => {
 
         {/* Featured Post */}
         <div className="mb-12">
-          <h2 className="mb-8 text-2xl font-bold text-gray-900">
+          <h2
+            data-aos="fade-right"
+            className="mb-8 text-2xl font-bold text-gray-900"
+          >
             Featured Article
           </h2>
-          <BlogPostCard post={blogPosts[0]} />
+          <BlogPostCard post={blogPosts[0]} index={0} />
         </div>
 
         {/* Latest Posts Grid */}
         <div>
-          <h2 className="mb-8 text-2xl font-bold text-gray-900">
+          <h2
+            data-aos="fade-right"
+            className="mb-8 text-2xl font-bold text-gray-900"
+          >
             Latest Articles
           </h2>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {blogPosts.slice(1).map((post) => (
-              <BlogPostCard key={post.id} post={post} />
+            {blogPosts.slice(1).map((post, index) => (
+              <BlogPostCard key={post.id} post={post} index={index + 1} />
             ))}
           </div>
-        </div>
-
-        {/* Load More Button */}
-        <div className="mt-12 text-center">
-          <button className="group inline-flex items-center rounded-lg border-2 border-blue-600 px-6 py-3 font-semibold text-blue-600 transition-all hover:bg-blue-600 hover:text-white">
-            Load More Articles
-            <BookOpen className="ml-2 h-5 w-5" />
-          </button>
         </div>
       </div>
     </div>

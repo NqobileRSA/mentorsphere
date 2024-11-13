@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.689.0",
-    "@headlessui/react": "^2.2.0",
+    "aos": "^2.3.4",
     "formidable": "^3.5.2",
+    "framer-motion": "^11.11.13",
     "lucide-react": "^0.456.0",
     "mentorsphere": "file:",
     "mongodb": "^6.10.0",
